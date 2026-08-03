@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import Layout, { ProtectedRoute } from './components/Layout'
 import Login from './pages/Login'
+import Upload from './pages/Upload'
 
 function Placeholder({ name }) {
   return (
@@ -23,7 +24,7 @@ export default function App() {
           <Route element={<ProtectedRoute />}>
             <Route element={<Layout />}>
               <Route index element={<Placeholder name="Dashboard" />} />
-              <Route path="upload" element={<Placeholder name="Upload" />} />
+              <Route path="upload" element={<Upload />} />
               <Route path="documents" element={<Placeholder name="Documents" />} />
               <Route path="documents/:id" element={<Placeholder name="Review" />} />
               <Route path="reports" element={<Placeholder name="Reports" />} />
