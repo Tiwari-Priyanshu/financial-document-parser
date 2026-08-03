@@ -1,16 +1,21 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import Layout, { ProtectedRoute } from './components/Layout'
 import Login from './pages/Login'
+import Dashboard from './pages/Dashboard'
 import Upload from './pages/Upload'
 import Documents from './pages/Documents'
 import Review from './pages/Review'
+import Reports from './pages/Reports'
+import Logs from './pages/Logs'
 
-function Placeholder({ name }) {
+function NotFound() {
   return (
-    <div className="rounded-lg border border-dashed border-rule-strong bg-surface px-6 py-16 text-center">
-      <p className="text-sm font-medium text-ink">{name}</p>
-      <p className="mt-1 text-sm text-ink-faint">Coming next.</p>
+    <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-paper px-4">
+      <p className="text-sm font-medium text-ink">That page does not exist</p>
+      <Link to="/" className="text-sm text-accent hover:underline">
+        Go to the dashboard
+      </Link>
     </div>
   )
 }
@@ -25,16 +30,16 @@ export default function App() {
 
           <Route element={<ProtectedRoute />}>
             <Route element={<Layout />}>
-              <Route index element={<Placeholder name="Dashboard" />} />
+              <Route index element={<Dashboard />} />
               <Route path="upload" element={<Upload />} />
               <Route path="documents" element={<Documents />} />
               <Route path="documents/:id" element={<Review />} />
-              <Route path="reports" element={<Placeholder name="Reports" />} />
-              <Route path="logs" element={<Placeholder name="Audit log" />} />
+              <Route path="reports" element={<Reports />} />
+              <Route path="logs" element={<Logs />} />
             </Route>
           </Route>
 
-          <Route path="*" element={<Placeholder name="Page not found" />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
