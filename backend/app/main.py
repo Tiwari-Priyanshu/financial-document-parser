@@ -15,7 +15,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pymongo.errors import PyMongoError
 
-from app.api import auth
+from app.api import auth, documents
 from app.core.config import settings
 from app.core.database import close_mongo_connection, connect_to_mongo
 
@@ -120,6 +120,7 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 
 # --- Routers ------------------------------------------------------------
 app.include_router(auth.router)
+app.include_router(documents.router)
 
 
 @app.get("/", tags=["Health"], summary="Service metadata")
