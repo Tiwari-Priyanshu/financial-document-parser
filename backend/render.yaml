@@ -1,0 +1,32 @@
+# Render Blueprint. Lets the service be recreated from config rather than
+# clicked together in the dashboard - and documents the deployment for anyone
+# reading the repo.
+services:
+  - type: web
+    name: findoc-api
+    runtime: python
+    region: singapore          # closest Render region to the Mumbai database
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    # $PORT is assigned by Render at runtime; binding 0.0.0.0 is required for
+    # the container to accept external traffic.
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.13
+      - key: MONGODB_URL
+        sync: false            # set in the dashboard, never committed
+      - key: MONGODB_DB_NAME
+        value: findoc
+      - key: SECRET_KEY
+        generateValue: true    # Render generates a strong random value
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.6-flash
+      - key: CORS_ORIGINS
+        sync: false            # set once the Vercel URL exists
+      - key: DEBUG
+        value: false
