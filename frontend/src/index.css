@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Ledger palette: cool neutrals, deep ink blue, amber for attention.
+     Chosen for a tool analysts read for hours - low glare, high contrast
+     where it matters, colour reserved for meaning rather than decoration. */
+  --color-ink: #131a24;
+  --color-ink-soft: #4a5568;
+  --color-ink-faint: #8794a5;
+  --color-paper: #fafbfc;
+  --color-surface: #ffffff;
+  --color-rule: #e2e6ed;
+  --color-rule-strong: #cbd2dd;
+
+  --color-accent: #1b4d8f;
+  --color-accent-soft: #eaf0f9;
+
+  --color-pass: #15803d;
+  --color-pass-soft: #eaf6ee;
+  --color-flag: #b45309;
+  --color-flag-soft: #fdf4e6;
+  --color-fail: #b91c1c;
+  --color-fail-soft: #fdeeee;
+
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  /* Financial figures must align vertically down a column. Without tabular
+     numerals, a 1 is narrower than an 8 and totals visibly stagger. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Identifiers - PAN, GSTIN, IFSC, account numbers - always render mono.
+     This is functional, not stylistic: proportional faces make 0/O and 1/I/l
+     nearly identical, and those are precisely the misreads the validation
+     engine exists to catch. A reviewer has to be able to see the difference. */
+  .ident {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
