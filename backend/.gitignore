@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# Secrets — never commit
+.env
+.env.local
+
+# Uploaded files and generated reports
+uploads/*
+!uploads/.gitkeep
+reports/*
+!reports/.gitkeep
+
+# macOS
+.DS_Store
+.vscode/
+.idea/
