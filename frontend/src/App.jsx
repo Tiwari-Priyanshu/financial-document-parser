@@ -3,6 +3,8 @@ import { AuthProvider } from './context/AuthContext'
 import Layout, { ProtectedRoute } from './components/Layout'
 import Login from './pages/Login'
 import Upload from './pages/Upload'
+import Documents from './pages/Documents'
+import Review from './pages/Review'
 
 function Placeholder({ name }) {
   return (
@@ -25,8 +27,8 @@ export default function App() {
             <Route element={<Layout />}>
               <Route index element={<Placeholder name="Dashboard" />} />
               <Route path="upload" element={<Upload />} />
-              <Route path="documents" element={<Placeholder name="Documents" />} />
-              <Route path="documents/:id" element={<Placeholder name="Review" />} />
+              <Route path="documents" element={<Documents />} />
+              <Route path="documents/:id" element={<Review />} />
               <Route path="reports" element={<Placeholder name="Reports" />} />
               <Route path="logs" element={<Placeholder name="Audit log" />} />
             </Route>
