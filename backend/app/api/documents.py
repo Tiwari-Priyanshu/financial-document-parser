@@ -15,7 +15,9 @@ from pathlib import Path
 from typing import Annotated, Any, Optional
 
 from beanie import PydanticObjectId
-from fastapi import APIRouter, File, HTTPException, Query, UploadFile, status
+from fastapi import (
+    APIRouter, BackgroundTasks, File, HTTPException, Query, UploadFile, status,
+)
 from fastapi.responses import FileResponse
 
 from app.core.config import settings
@@ -54,6 +56,7 @@ router = APIRouter(prefix="/api/documents", tags=["Documents"])
 )
 async def upload_document(
     user: CurrentUser,
+    background_tasks: BackgroundTasks,
     file: Annotated[UploadFile, File(description="PDF, JPG, JPEG or PNG, max 25 MB")],
 ):
     """
@@ -141,6 +144,16 @@ async def upload_document(
         document_name=document.document_name,
         remarks=f"{document.document_name} ({len(content)} bytes)",
     )
+
+    # Kick off OCR + parsing without making the client wait for it.
+    from app.api.parser import _run_pipeline_in_background
+
+    background_tasks.add_task(_run_pipeline_in_background, str(document.id), user)
+
+    # Kick off OCR + parsing without making the client wait for it.
+    from app.api.parser import _run_pipeline_in_background
+
+    background_tasks.add_task(_run_pipeline_in_background, str(document.id), user)
 
     return UploadResponse(
         document=DocumentOut.from_document(document),
