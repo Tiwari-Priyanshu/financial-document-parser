@@ -15,7 +15,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pymongo.errors import PyMongoError
 
-from app.api import auth, dashboard, documents, logs, parser
+from app.api import auth, dashboard, documents, logs, parser, reports
 from app.core.config import settings
 from app.core.database import close_mongo_connection, connect_to_mongo
 
@@ -124,6 +124,7 @@ app.include_router(documents.router)
 app.include_router(parser.router)
 app.include_router(dashboard.router)
 app.include_router(logs.router)
+app.include_router(reports.router)
 
 
 @app.get("/", tags=["Health"], summary="Service metadata")
